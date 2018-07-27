@@ -1,0 +1,30 @@
+{
+  "name": "newreach.co",
+  "version": "1.0.0",
+  "description": "NewReach.co",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeygrable94/NewReachWP.git"
+  },
+  "author": "Joey Grable",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joeygrable94/NewReachWP/issues"
+  },
+  "homepage": "https://github.com/joeygrable94/NewReachWP#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^3.3.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-curl": "^2.4.1",
+    "grunt-wp-i18n": "^1.0.2"
+  }
+}
