@@ -2,33 +2,33 @@
 module.exports = function(grunt) {
 
 	// directories
-	let dir = {
-		'theme': '/wp-content/themes/NewReach',
-		'sassy': {
-			'dev': '/assets/sassy/',
-			'prod': '/assets/css/',
-		},
-		'js': {
-			'dev': '/assets/js/dev/',
-			'prod': '/assets/js/',
-		},
-	}
+	var themeName = 'newreach';
+	var theme = {
+		root: './wp-content/themes/' + themeName
+	};
+	// development
+	var dev	= {
+		root: './dev_stack',
+		sass: '/sassy',
+		css: '/css',
+		js: '/js',
+		vendors: '/vendors'
+	};
+	// production
+	var dist = {
+		root: theme.root+'/assets',
+		css: '/css',
+		images: '/images',
+		js: '/js'
+	};
 
-	// configure tasks
+	// initial config
 	grunt.initConfig({
 
-		// settings
+		// load package
 		pkg: grunt.file.readJSON('package.json'),
 
-		// copy
-		copy: {
-			dist: {
-				src: 'readme.txt',
-				dest: 'README.md'
-			}
-        },
-
-        // GOOGLE FONTS
+		// GOOGLE FONTS
 		/*curl: {
 			'google-fonts-source': {
 				src: 'https://www.googleapis.com/webfonts/v1/webfonts?key=*******',
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 		}*/
 
 		// localization
-		makepot: {
+		/*makepot: {
 			target: {
 				options: {
 					include: [
@@ -46,134 +46,122 @@ module.exports = function(grunt) {
 					type: 'wp-theme' // `wp-theme` or `wp-plugin`
 				}
 			}
-		},
+		},*/
 
-		// JS LINT
-		jshint: {
-			files: [
-				'assets/js/filename.js',
-				'assets/dynamic/paths/**/*.js'
-			],
-			options: {
-				expr: true,
-				globals: {
-					jQuery: true,
-					console: true,
-					module: true,
-					document: true
-				}
-			}
-		},
-
-		// SASS
+		// compile, convert & compress sass
 		sass: {
-			dist: {
-				options: {
-					banner: '/*! <%= pkg.name %> <%= pkg.version %> filename.min.css <%= grunt.template.today("yyyy-mm-dd h:MM:ss TT") %> */\n',
-					style: 'compressed'
-				},
-				files: [{
-					expand: true,
-					cwd: 'assets/scss',
-					src: [
-						'*.scss'
-					],
-					dest: 'assets/css',
-					ext: '.min.css'
-				}]
-			},
 			dev: {
 				options: {
-					banner: '/*! <%= pkg.name %> <%= pkg.version %> filename.css <%= grunt.template.today("yyyy-mm-dd h:MM:ss TT") %> */\n',
 					style: 'expanded'
 				},
 				files: [{
 					expand: true,
-					cwd: 'assets/scss',
-					src: [
-						'*.scss'
-					],
-					dest: 'assets/css',
-					ext: '.css'
+					cwd: dev.root+dev.sass,
+					src: ['*.scss'],
+					dest: dev.root+dev.css,
+					ext: '.dev.css'
+				}]
+			},
+			dist: {
+				options: {
+					style: 'compressed'
+				},
+				files: [{
+					expand: true,
+					cwd: dev.root+dev.sass,
+					src: ['*.scss'],
+					dest: dist.root+dist.css,
+					ext: '.min.css'
 				}]
 			}
 		},
 
-		// JS MINIFY
-		uglify: {
-			dist: {
-				options: {
-					banner: '/*! <%= pkg.name %> <%= pkg.version %> filename.min.js <%= grunt.template.today("yyyy-mm-dd h:MM:ss TT") %> */\n',
-					report: 'gzip'
-				},
-				files: {
-					'assets/js/filename.min.js' : [
-						'assets/path/to/file.js',
-						'assets/path/to/another/file.js',
-						'assets/dynamic/paths/**/*.js'
-					]
-				}
-			},
-			dev: {
-				options: {
-					banner: '/*! <%= pkg.name %> <%= pkg.version %> filename.js <%= grunt.template.today("yyyy-mm-dd h:MM:ss TT") %> */\n',
-					beautify: true,
-					compress: false,
-					mangle: false
-				},
-				files: {
-					'assets/js/filename.js' : [
-						'assets/path/to/file.js',
-						'assets/path/to/another/file.js',
-						'assets/dynamic/paths/**/*.js'
-					]
+		// lint JS for errors
+		jshint: {
+			files: [
+				'gruntfile.js',
+				dev.root+dev.js+'/vendors/*.js',
+				dev.root+dev.js+'/src/*.js',
+				dev.root+dev.js+'/test/*.js',
+			],
+			options: {
+				esversion: 6,
+				globals: {
+					jQuery: true
 				}
 			}
 		},
 
-		// watch tasks
-		watch: {
-			// JS
-			js: {
-				files: 'path/to/sass/*.less',
-				tasks: [
-					'uglify',
-					'jshint'
-				]
+		// concat all js files
+		concat: {
+			options: {
+				separator: '\n\n\n\n\n/** ================================================== **/\n'
 			},
-			// SASS
-			sass: {
-				files: 'path/to/sass/*.less',
-				tasks: 'sass'
+			dist: {
+				src: [
+					dev.root+dev.js+'/vendors/*.js',
+					dev.root+dev.js+'/src/*.js',
+					dev.root+dev.js+'/test/*.js',
+				],
+				dest: dev.root+dev.js+'/concatenated/'+themeName+'.js'
 			}
 		},
+
+		// convert JS ES6 to ES5 compatible
+		babel: {
+			options: {
+				sourceMap: true,
+				presets: ['env']
+			},
+			dist: {
+				files: [{
+					expand: true,
+					cwd: dev.root+dev.js+'/concatenated',
+					src: ['**/*.js'],
+					dest: dev.root+dev.js+'/compiled',
+					ext: '.compiled.js'
+				}]
+			}
+		},
+
+		// compress JS
+		uglify: {
+			options: {
+				mangle: true
+			},
+			build : {
+				src : [
+					dev.root+dev.js+'/compiled/'+themeName+'.compiled.js'
+				],
+				dest: dist.root+dist.js+'/'+themeName+'.min.js',
+			}
+		},
+
+		// watcher
+		watch: {
+			css: {
+				files: [dev.root+dev.sass+'/**/*.scss'],
+				tasks: ['sass']
+			},
+			js: {
+				files: [dev.root+dev.js+'/**/*.js'],
+				tasks: ['jshint', 'concat', 'babel']
+			}
+		}
 
 	});
 
-	// load tasks
-	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-sass');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	//grunt.loadNpmTasks('grunt-curl');
-	grunt.loadNpmTasks('grunt-wp-i18n');
-	grunt.loadNpmTasks('grunt-contrib-watch');
+	// load plugins
+	require('load-grunt-tasks')(grunt);
+	grunt.loadNpmTasks('grunt-babel');
 
 	// register tasks
 	grunt.registerTask('default', [
+		'sass',
 		'jshint',
-		'uglify:dev',
-		'uglify:dist',
-		'sass:dev',
-		'sass:dist',
-		'makepot',
-		'copy'
+		'concat',
+		'babel',
+		'uglify'
 	]);
-	// google fonts
-	/*grunt.registerTask('googlefonts', [
-		'curl:google-fonts-source'
-	]);*/
 
-}
-
-
+};
