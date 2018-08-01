@@ -36,17 +36,26 @@ module.exports = function(grunt) {
 			}
 		}*/
 
+		// copy
+		copy: {
+			dist: {
+				src: 'README.md',
+				dest: theme.root + '/languages/readme.txt'
+			}
+		},
+
 		// localization
-		/*makepot: {
+		makepot: {
 			target: {
 				options: {
 					include: [
-						'path/to/some/file.php'
+						theme.root + '/**/*.php'
 					],
+					domainPath: theme.root + '/languages',
 					type: 'wp-theme' // `wp-theme` or `wp-plugin`
 				}
 			}
-		},*/
+		},
 
 		// compile, convert & compress sass
 		sass: {
@@ -157,6 +166,8 @@ module.exports = function(grunt) {
 
 	// register tasks
 	grunt.registerTask('default', [
+		'copy',
+		'makepot',
 		'sass',
 		'jshint',
 		'concat',
