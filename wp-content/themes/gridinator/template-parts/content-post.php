@@ -1,8 +1,6 @@
 <?php
 /**
  * Template part for displaying a SINGLE post
- *
- * @package WP_Gridinator
  */
 ?>
 

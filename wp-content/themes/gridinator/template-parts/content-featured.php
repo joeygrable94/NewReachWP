@@ -1,8 +1,6 @@
 <?php
 /**
  * Template part for displaying MULTIPLE posts
- *
- * @package WP_Gridinator
  */
 ?>
 	

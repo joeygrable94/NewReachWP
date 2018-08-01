@@ -1,8 +1,6 @@
 <?php
 /**
  * WP_Gridinator Theme Customizer
- *
- * @package WP_Gridinator
  */
 
 /**

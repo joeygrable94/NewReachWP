@@ -1,10 +1,6 @@
 <?php
 /**
  * Custom template tags for this theme
- *
- * Eventually, some of the functionality here could be replaced by core features.
- *
- * @package WP_Gridinator
  */
 
 if ( ! function_exists( 'wp_gridinator_posted_on' ) ) :

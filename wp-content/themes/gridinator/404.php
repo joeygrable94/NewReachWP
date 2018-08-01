@@ -3,13 +3,10 @@
  * The template for displaying 404 pages (not found)
  *
  * @link https://codex.wordpress.org/Creating_an_Error_404_Page
- *
- * @package WP_Gridinator
  */
 
 get_header();
 ?>
-
 
 	<header class="page-header header-404">
 		<h1 class="page-title">ERROR: <?php esc_html_e( 'page not found', 'wp_gridinator' ); ?></h1>

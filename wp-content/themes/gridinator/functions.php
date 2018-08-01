@@ -3,8 +3,6 @@
  * WP_Gridinator functions and definitions
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
- *
- * @package WP_Gridinator
  */
 
 if ( ! function_exists( 'wp_gridinator_setup' ) ) :

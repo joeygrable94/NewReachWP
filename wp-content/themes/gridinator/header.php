@@ -1,9 +1,8 @@
 <?php
 /**
- * The header for our theme
+ * The theme header
  * 
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- * 
  */
 
 ?>
@@ -14,9 +13,11 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php wp_head(); ?>
+	
 	<!-- Google reCAPTCHA -->
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src='https://www.google.com/recaptcha/api.js'></script>
+	
 	<!-- ANALYTICS -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-122319281-1"></script>
@@ -31,12 +32,15 @@
 	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 	})(window,document,'script','dataLayer','GTM-5LGBFVS');</script>
 	<!-- End Google Tag Manager -->
+
 </head>
 <body <?php body_class(); ?>>
+
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5LGBFVS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
 <!-- header -->
 <header id="site-header" class="<?php echo get_current_page_class(); ?>">
 	<!-- custom logo & description -->

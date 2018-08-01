@@ -29,6 +29,7 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 
 		// GOOGLE FONTS
+		// https://google-webfonts-helper.herokuapp.com/fonts
 		/*curl: {
 			'google-fonts-source': {
 				src: 'https://www.googleapis.com/webfonts/v1/webfonts?key=*******',
