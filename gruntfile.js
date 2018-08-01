@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 	// development
 	var dev	= {
 		root: './dev_stack',
-		sass: '/sassy',
+		sass: '/SASSy/src/sass',
 		css: '/css',
 		js: '/js',
 		vendors: '/vendors'
