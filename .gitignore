@@ -1,4 +1,5 @@
 .DS_Sore
+*.DS_Sore
 
 .sass-cache
 *.css.map

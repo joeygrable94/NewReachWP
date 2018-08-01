@@ -1,4 +1,4 @@
-// GRUNT
+git // GRUNT
 module.exports = function(grunt) {
 
 	// directories
