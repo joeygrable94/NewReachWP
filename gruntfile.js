@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 						theme.root + '/**/*.php'
 					],
 					domainPath: theme.root + '/languages',
-					type: 'wp-theme' // `wp-theme` or `wp-plugin`
+					type: 'wp-theme'
 				}
 			}
 		},

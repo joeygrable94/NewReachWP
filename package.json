@@ -1,5 +1,5 @@
 {
-  "name": "newreach",
+  "name": "wordpress-grunt",
   "version": "1.0.0",
   "description": "NewReach.co",
   "main": "gruntfile.js",
