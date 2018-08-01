@@ -42,6 +42,8 @@ body {
   font-family: "akzg-light", Helvetica, sans-serif;
   font-weight: 400;
   color: #000000;
+  direction: rtl;
+  unicode-bidi: embed;
 }
 @media (min-width: 500px) {
   body {

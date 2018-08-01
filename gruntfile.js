@@ -2,7 +2,7 @@
 module.exports = function(grunt) {
 
 	// directories
-	var themeName = 'newreach';
+	var themeName = 'gridinator';
 	var theme = {
 		root: './wp-content/themes/' + themeName
 	};
@@ -39,8 +39,8 @@ module.exports = function(grunt) {
 		// copy
 		copy: {
 			dist: {
-				src: 'README.md',
-				dest: theme.root + '/languages/readme.txt'
+				src: ['_README.md', '_LICENSE.md'],
+				dest: theme.root + '/'
 			}
 		},
 

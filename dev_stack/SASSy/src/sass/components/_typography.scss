@@ -26,6 +26,8 @@ body {
 	font-family: $base-font-family;
 	font-weight: 400;
 	color: $black;
+	direction: rtl;
+	unicode-bidi: embed;
 }
 
 h1, .h1,
