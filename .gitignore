@@ -1,7 +1,12 @@
+.DS_Sore
+
 .sass-cache
+*.css.map
+*.sass.map
+*.scss.map
+
 node_modules
 npm-debug.log
-docs
 
 *.log
 wp-config.php
@@ -16,8 +21,6 @@ wp-content/mu-plugins/
 wp-content/wp-cache-config.php
 wp-content/plugins/hello.php
 
-/.htaccess
-/license.txt
-/readme.html
-/sitemap.xml
-/sitemap.xml.gz
+.htaccess
+sitemap.xml
+sitemap.xml.gz
