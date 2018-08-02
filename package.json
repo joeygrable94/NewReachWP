@@ -8,7 +8,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "git+https://github.com/joeygrable94/NewReachWP.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeygrable94/NewReachWP.git"
+  },
   "bugs": {
     "url": "https://github.com/joeygrable94/NewReachWP/issues"
   },
