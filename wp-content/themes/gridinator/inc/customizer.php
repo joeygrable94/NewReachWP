@@ -20,11 +20,15 @@ function wp_gridinator_customize_register( $wp_customize ) {
 		) );
 		$wp_customize->selective_refresh->add_partial( 'blogdescription', array(
 			'selector'        => '.site-description',
-			'render_callback' => 'wp_gridinator_customize_partial_blogdescription',
+			'render_callback' => 'wp_gridinator_customize_partial_blog_description',
 		) );
 	}
 }
 add_action( 'customize_register', 'wp_gridinator_customize_register' );
+
+
+
+
 
 /**
  * Render the site title for the selective refresh partial.
@@ -35,14 +39,22 @@ function wp_gridinator_customize_partial_blogname() {
 	bloginfo( 'name' );
 }
 
+
+
+
+
 /**
  * Render the site tagline for the selective refresh partial.
  *
  * @return void
  */
-function wp_gridinator_customize_partial_blogdescription() {
+function wp_gridinator_customize_partial_blog_description() {
 	bloginfo( 'description' );
 }
+
+
+
+
 
 /**
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
@@ -51,3 +63,7 @@ function wp_gridinator_customize_preview_js() {
 	wp_enqueue_script( 'wp_gridinator-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '20151215', true );
 }
 add_action( 'customize_preview_init', 'wp_gridinator_customize_preview_js' );
+
+
+
+

@@ -5,6 +5,7 @@
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  */
 
+// SETUP
 if ( ! function_exists( 'wp_gridinator_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -38,9 +39,11 @@ if ( ! function_exists( 'wp_gridinator_setup' ) ) :
 		 *
 		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		 */
-		add_theme_support('post-thumbnails', array( 'post', 'page' ) );
+		add_theme_support( 'post-thumbnails', array( 'post', 'page' ) );
 
-		// This theme uses wp_nav_menu() in one location.
+		/**
+		 * Register navigation menus
+		 */
 		register_nav_menus( array(
 			'navigation_site' => 'Site Navigation',
 			'navigation_header' => 'Header Navigation',
@@ -50,13 +53,7 @@ if ( ! function_exists( 'wp_gridinator_setup' ) ) :
 		 * Switch default core markup for search form, comment form, and comments
 		 * to output valid HTML5.
 		 */
-		add_theme_support( 'html5', array(
-			'search-form',
-			'comment-form',
-			'comment-list',
-			'gallery',
-			'caption',
-		) );
+		add_theme_support('html5', array('search-form', 'comment-form', 'comment-list', 'gallery', 'caption'));
 
 		// Set up the WordPress core custom background feature.
 		add_theme_support( 'custom-background', apply_filters( 'wp_gridinator_custom_background_args', array(
@@ -82,6 +79,10 @@ if ( ! function_exists( 'wp_gridinator_setup' ) ) :
 endif;
 add_action( 'after_setup_theme', 'wp_gridinator_setup' );
 
+
+
+
+
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
@@ -96,6 +97,10 @@ function wp_gridinator_content_width() {
 	$GLOBALS['content_width'] = apply_filters( 'wp_gridinator_content_width', 640 );
 }
 add_action( 'after_setup_theme', 'wp_gridinator_content_width', 0 );
+
+
+
+
 
 /**
  * Register widget area.
@@ -115,6 +120,10 @@ function wp_gridinator_widgets_init() {
 }
 add_action( 'widgets_init', 'wp_gridinator_widgets_init' );
 
+
+
+
+
 /**
  * Enqueue scripts and styles.
  */
@@ -131,6 +140,10 @@ function wp_gridinator_scripts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'wp_gridinator_scripts' );
+
+
+
+
 
 /**
  * Implement the Custom Header feature.
@@ -157,9 +170,6 @@ require get_template_directory() . '/inc/template-shortcodes.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
-/**
- * Load Jetpack compatibility file.
- */
-if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
-}
+
+
+

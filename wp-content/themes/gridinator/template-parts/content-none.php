@@ -2,7 +2,6 @@
 /**
  * Template part for displaying a message that posts cannot be found
  */
-
 ?>
 
 <section class="grid-search-not-found no-results not-found">

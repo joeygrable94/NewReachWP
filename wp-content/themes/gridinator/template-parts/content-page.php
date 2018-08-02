@@ -2,7 +2,6 @@
 /**
  * Template part for displaying page content in page.php
  */
-
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( array('grid-block', 'grid-page') ); ?>>

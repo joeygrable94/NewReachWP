@@ -25,6 +25,7 @@
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
 	gtag('config', 'UA-122319281-1');</script>
+	
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -64,10 +65,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </nav><!-- #navigation-site -->
 
 <!-- #page -->
-<div id="page"
-  class="va-debug <?php 	echo get_current_page_class() . ' ';
-		if ( is_home() ) { 	echo 'grid-default'; }
-		else { 				echo 'grid-default'; } ?>">
+<div id="page" class="grid-default <?php echo get_current_page_class() . ' '; ?>">
 
 	<!-- nav-toggle -->
 	<div id="site-nav-toggle" data-bind="click" data-event="toggler" data-toggle="#navigation-site">

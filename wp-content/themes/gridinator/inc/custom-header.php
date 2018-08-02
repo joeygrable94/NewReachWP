@@ -20,6 +20,11 @@ function wp_gridinator_custom_header_setup() {
 }
 add_action( 'after_setup_theme', 'wp_gridinator_custom_header_setup' );
 
+
+
+
+
+// header style
 if ( ! function_exists( 'wp_gridinator_header_style' ) ) :
 	/**
 	 * Styles the header image and text displayed on the blog.

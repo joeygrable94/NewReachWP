@@ -1,8 +1,13 @@
 <?php
 /**
- * Custom template tags for this theme
+ * Custom template tags for theme
  */
 
+
+
+
+
+// Posted On
 if ( ! function_exists( 'wp_gridinator_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time.
@@ -31,6 +36,12 @@ if ( ! function_exists( 'wp_gridinator_posted_on' ) ) :
 	}
 endif;
 
+
+
+
+
+
+// Posted By
 if ( ! function_exists( 'wp_gridinator_posted_by' ) ) :
 	/**
 	 * Prints HTML with meta information for the current author.
@@ -47,6 +58,12 @@ if ( ! function_exists( 'wp_gridinator_posted_by' ) ) :
 	}
 endif;
 
+
+
+
+
+
+// Entry Footer
 if ( ! function_exists( 'wp_gridinator_entry_footer' ) ) :
 	/**
 	 * Prints HTML with meta information for the categories, tags and comments.
@@ -107,6 +124,11 @@ if ( ! function_exists( 'wp_gridinator_entry_footer' ) ) :
 	}
 endif;
 
+
+
+
+
+// Post Thumbnail
 if ( ! function_exists( 'wp_gridinator_post_thumbnail' ) ) :
 	/**
 	 * Displays an optional post thumbnail.
@@ -142,3 +164,7 @@ if ( ! function_exists( 'wp_gridinator_post_thumbnail' ) ) :
 		endif; // End is_singular().
 	}
 endif;
+
+
+
+
