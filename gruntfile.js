@@ -1,4 +1,5 @@
-git // GRUNT
+
+// GRUNT
 module.exports = function(grunt) {
 
 	// directories
@@ -12,14 +13,15 @@ module.exports = function(grunt) {
 		sass: '/SASSy/src/sass',
 		css: '/css',
 		js: '/js',
-		vendors: '/vendors'
+		fonts: '/fonts'
 	};
 	// production
 	var dist = {
 		root: theme.root+'/assets',
 		css: '/css',
 		images: '/images',
-		js: '/js'
+		js: '/js',
+		fonts: '/fonts'
 	};
 
 	// initial config
@@ -28,20 +30,38 @@ module.exports = function(grunt) {
 		// load package
 		pkg: grunt.file.readJSON('package.json'),
 
-		// GOOGLE FONTS
-		// https://google-webfonts-helper.herokuapp.com/fonts
-		/*curl: {
-			'google-fonts-source': {
-				src: 'https://www.googleapis.com/webfonts/v1/webfonts?key=*******',
-				dest: 'assets/vendor/google-fonts-source.json'
-			}
-		}*/
-
 		// copy
 		copy: {
-			dist: {
-				src: ['_README.md', '_LICENSE.md'],
-				dest: theme.root + '/'
+			info: {
+				files: [
+					{
+						expand: true,
+						src: ['_README.md', '_LICENSE.md'],
+						dest: theme.root + '/'
+					},
+				]
+			},
+			scripts: {
+				files: [
+					{
+						cwd: 'node_modules/html5-boilerplate/dist/js/vendor/',
+						expand: true,
+						src: 'modernizr-3.6.0.min.js',
+						dest: dev.root+dev.js + '/vendors/'
+					},
+					{
+						cwd: 'node_modules/html5-boilerplate/dist/js/vendor/',
+						expand: true,
+						src: 'jquery-3.3.1.min.js',
+						dest: dev.root+dev.js + '/vendors/'
+					},
+					{
+						cwd: 'node_modules/jquery-mousewheel/',
+						expand: true,
+						src: 'jquery.mousewheel.js',
+						dest: dev.root+dev.js + '/vendors/'
+					}
+				]
 			}
 		},
 
@@ -49,12 +69,21 @@ module.exports = function(grunt) {
 		makepot: {
 			target: {
 				options: {
-					include: [
-						theme.root + '/**/*.php'
-					],
+					cwd: theme.root + '/',
+					mainFile: 'index.php',
+					potFilename: 'gridinator.pot',
 					domainPath: theme.root + '/languages',
 					type: 'wp-theme'
 				}
+			}
+		},
+
+		// GOOGLE FONTS
+		// https://google-webfonts-helper.herokuapp.com/fonts
+		curl: {
+			'google-fonts-source': {
+				src: 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCrD4mhSNS7LYjy1dcVq-AL4bBc47akVYM',
+				dest: dev.root + dev.fonts + '/google-fonts-source.json'
 			}
 		},
 
@@ -71,18 +100,30 @@ module.exports = function(grunt) {
 					dest: dev.root+dev.css,
 					ext: '.dev.css'
 				}]
+			}
+		},
+		
+		// prefix css
+		postcss: {
+			options: {
+				processors: [
+					require('autoprefixer')()
+				],
 			},
 			dist: {
-				options: {
-					style: 'compressed'
-				},
-				files: [{
-					expand: true,
-					cwd: dev.root+dev.sass,
-					src: ['*.scss'],
-					dest: dist.root+dist.css,
-					ext: '.min.css'
-				}]
+				src: dev.root+dev.css + '/*.dev.css',
+				dest: dist.root+dist.css + '/styles.prefixed.css'
+			}
+		},
+
+		// minify css
+		cssnano: {
+			options: {
+				sourcemap: false
+			},
+			dist: {
+				src: dist.root+dist.css + '/styles.prefixed.css',
+				dest: dist.root+dist.css + '/styles.min.css'
 			}
 		},
 
@@ -90,7 +131,7 @@ module.exports = function(grunt) {
 		jshint: {
 			files: [
 				'gruntfile.js',
-				dev.root+dev.js+'/vendors/*.js',
+				dev.root+dev.js+'/wordpress/*.js',
 				dev.root+dev.js+'/src/*.js',
 				dev.root+dev.js+'/test/*.js',
 			],
@@ -105,22 +146,24 @@ module.exports = function(grunt) {
 		// concat all js files
 		concat: {
 			options: {
+				sourceMap: false,
 				separator: '\n\n\n\n\n/** ================================================== **/\n'
 			},
 			dist: {
 				src: [
 					dev.root+dev.js+'/vendors/*.js',
+					dev.root+dev.js+'/wordpress/*.js',
 					dev.root+dev.js+'/src/*.js',
 					dev.root+dev.js+'/test/*.js',
 				],
-				dest: dev.root+dev.js+'/concatenated/'+themeName+'.js'
+				dest: dev.root+dev.js+'/concatenated/scripts.js'
 			}
 		},
 
 		// convert JS ES6 to ES5 compatible
 		babel: {
 			options: {
-				sourceMap: true,
+				sourceMap: false,
 				presets: ['env']
 			},
 			dist: {
@@ -141,9 +184,9 @@ module.exports = function(grunt) {
 			},
 			build : {
 				src : [
-					dev.root+dev.js+'/compiled/'+themeName+'.compiled.js'
+					dev.root+dev.js+'/compiled/scripts.compiled.js'
 				],
-				dest: dist.root+dist.js+'/'+themeName+'.min.js',
+				dest: dist.root+dist.js+'/scripts.min.js',
 			}
 		},
 
@@ -151,11 +194,11 @@ module.exports = function(grunt) {
 		watch: {
 			css: {
 				files: [dev.root+dev.sass+'/**/*.scss'],
-				tasks: ['sass']
+				tasks: ['sass', 'postcss', 'cssnano']
 			},
 			js: {
 				files: [dev.root+dev.js+'/**/*.js'],
-				tasks: ['jshint', 'concat', 'babel']
+				tasks: ['jshint', 'concat', 'babel', 'uglify']
 			}
 		}
 
@@ -169,11 +212,14 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', [
 		'copy',
 		'makepot',
+		'curl',
 		'sass',
+		'postcss',
+		'cssnano',
 		'jshint',
 		'concat',
 		'babel',
-		'uglify'
+		'uglify',
 	]);
 
 };
