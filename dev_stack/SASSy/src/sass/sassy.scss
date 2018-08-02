@@ -11,8 +11,8 @@
 @import "modules/functions";			// global functions
 @import "modules/grid";					// grid system functions and mixins
 
-// reset styles
-@import "../../bower_components/HTML5-reset/assets/css/reset.css";
+@import "vendors/reset";			// reset styles
+@import "vendors/normalize.min";	// normalize styles
 
 @import "modules/font-face";			// mixin to include fonts => git@TMMC
 @import "modules/font-imports";			// import custom fonts

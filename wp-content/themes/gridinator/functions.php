@@ -133,7 +133,7 @@ function wp_gridinator_scripts() {
 	wp_enqueue_style( 'wp_gridinator-style', get_template_directory_uri() . '/assets/css/styles.min.css' );
 
 	/* JS */
-	wp_enqueue_script( 'wp_gridinator-scripts', get_template_directory_uri() . '/assets/js/scripts.min.js' );
+	wp_enqueue_script( 'wp_gridinator-scripts', get_template_directory_uri() . '/assets/js/scripts.concat.js' );
 
 	/** COMMENTS **/
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }

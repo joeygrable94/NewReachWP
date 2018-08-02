@@ -1,6 +1,4 @@
 // SASSY GLOBAL
-// From theme directory, run command:
-// sass --watch sassy/sassy.scss:assets/css/sassy.css
 // -------------------------
 
 
@@ -430,8 +428,8 @@ nav#navigation-site {
 			font-size: 100%;
 			@include font-contrast(
 				$family: 'akzg-bold',
-				$style: bold,
-				$weight: light
+				$style: normal,
+				$weight: bold
 			);
 			@include transition($time: 0.25s, $type: ease-out);
 		}
@@ -902,7 +900,7 @@ img.entry-thumbnail,
 }
 
 #site-widgets {
-	//border-top: $vertical-measure solid $color-secondary;
+	border-top: $vertical-measure solid $color-secondary;
 	background-color: $white;
 	//margin-top: linear-scale(4);
 	& .widget-area {
@@ -936,11 +934,6 @@ img.entry-thumbnail,
 // Widget: SEARCH
 .search-terms {
 	font-style: bold;
-	@include font-contrast(
-		'akzg-bold',
-		$style: bold,
-		$weight: light
-	);
 	color: $color-primary;
 	@include transition($time: 0.33s, $type: ease-out);
 	&:hover {

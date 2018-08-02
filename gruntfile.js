@@ -62,6 +62,16 @@ module.exports = function(grunt) {
 						dest: dev.root+dev.js + '/vendors/'
 					}
 				]
+			},
+			fonts: {
+				files: [
+					{
+						cwd: dev.root+dev.fonts,
+						expand: true,
+						src: '*.otf',
+						dest: dist.root+dist.fonts
+					}
+				]
 			}
 		},
 
@@ -149,6 +159,15 @@ module.exports = function(grunt) {
 				sourceMap: false,
 				separator: '\n\n\n\n\n/** ================================================== **/\n'
 			},
+			dev: {
+				src: [
+					dev.root+dev.js+'/vendors/*.js',
+					dev.root+dev.js+'/wordpress/*.js',
+					dev.root+dev.js+'/src/*.js',
+					dev.root+dev.js+'/test/*.js',
+				],
+				dest: dev.root+dev.js+'/concatenated/scripts.concat.js'
+			},
 			dist: {
 				src: [
 					dev.root+dev.js+'/vendors/*.js',
@@ -156,7 +175,7 @@ module.exports = function(grunt) {
 					dev.root+dev.js+'/src/*.js',
 					dev.root+dev.js+'/test/*.js',
 				],
-				dest: dev.root+dev.js+'/concatenated/scripts.js'
+				dest: dist.root+dist.js+'/scripts.concat.js'
 			}
 		},
 
@@ -219,7 +238,7 @@ module.exports = function(grunt) {
 		'jshint',
 		'concat',
 		'babel',
-		'uglify',
+		'uglify'
 	]);
 
 };

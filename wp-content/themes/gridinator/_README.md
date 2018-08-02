@@ -1,1 +1,1 @@
-# Wordpress Grunt Stack
+Wordpress Grunt Stack
