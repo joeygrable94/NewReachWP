@@ -101,6 +101,7 @@ module.exports = function(grunt) {
 		sass: {
 			dev: {
 				options: {
+					sourcemap: false,
 					style: 'expanded'
 				},
 				files: [{
@@ -116,6 +117,7 @@ module.exports = function(grunt) {
 		// prefix css
 		postcss: {
 			options: {
+				sourcemap: false,
 				processors: [
 					require('autoprefixer')()
 				],
