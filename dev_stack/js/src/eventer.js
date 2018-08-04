@@ -44,6 +44,7 @@ EXAMPLE:
 			fullscreen: function(event) {
 				// do stuff with view content
 				let viewContent = event.target.getAttribute('data-view');
+				let bgColor = event.target.getAttribute('data-bg-color');
 				let box = $('#fullscreen-lightbox');
 				// light box exists
 				if (box.length) {
@@ -56,7 +57,7 @@ EXAMPLE:
 					// add lightbox to DOM
 					let FS_lightbox = '<div id="fullscreen-lightbox" class="fs-lightbox active">';
 						FS_lightbox += '<a class="inner-toggle fs-lb-close" data-bind="click" data-event="toggler" data-toggle="#fullscreen-lightbox"><i class="fa fa-plus"></i> exit fullscreen</a>';
-						FS_lightbox += '<div class="inner-content">';
+						FS_lightbox += '<div class="inner-content" style="background-color: ' + bgColor + '">';
 						FS_lightbox += '<img class="view-content" src="' + viewContent + '"/>';
 						FS_lightbox += '</div></div>';
 					$('body').append(FS_lightbox);

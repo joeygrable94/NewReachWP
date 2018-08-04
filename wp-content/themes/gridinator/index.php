@@ -44,7 +44,8 @@ if (have_posts()):
 
 			# modular grid
 			echo '<div class="post-modular">';
-			while (have_posts()) : the_post();
+			while (have_posts()):
+				the_post();
 				get_template_part('template-parts/content', 'modular');
 			endwhile;
 			echo '</div>';

@@ -59,12 +59,14 @@ add_shortcode('nav', 'wp_gridinator_nav_wrap_shortcode');
  */
 function wp_gridinator_view_fullscreen_image_shortcode($atts, $content = null) {
 	$atts = shortcode_atts(array(
+		'bg-color' => '#8F5500',
 		'view' => '0'
 	), $atts, 'fullscreen');
 	return '<button class="btn btn-fullscreen"
 				data-bind="click"
 				data-event="fullscreen"
-				data-view="' . $atts['view'] . '">'.$content.'</button>';
+				data-view="' . $atts['view'] . '"
+				data-bg-color="' . $atts['bg-color'] . '">'.$content.'</button>';
 }
 add_shortcode('fullscreen', 'wp_gridinator_view_fullscreen_image_shortcode');
 

@@ -27,16 +27,16 @@
  * @param => @array of your shortcodes to filter
  */
 function wp_gridinator_shortcode_content_filter($content) {
-    $block = join("|", array(
-    	'scroller',
+	$block = join("|", array(
+		'scroller',
 		'image_block',
 		'nav',
 		'view_fullscreen',
 		'column_wrap',
 		'column'
 	));
-    $rep = preg_replace("/(<p>)?\[($block)(\s[^\]]+)?\](<\/p>|<br \/>)?/","[$2$3]",$content);
-    $rep = preg_replace("/(<p>)?\[\/($block)](<\/p>|<br \/>)?/","[/$2]",$rep);
+	$rep = preg_replace("/(<p>)?\[($block)(\s[^\]]+)?\](<\/p>|<br \/>)?/","[$2$3]",$content);
+	$rep = preg_replace("/(<p>)?\[\/($block)](<\/p>|<br \/>)?/","[/$2]",$rep);
 return $rep;
 }
 add_filter("the_content", "wp_gridinator_shortcode_content_filter");
@@ -215,14 +215,33 @@ function wp_gridinator_site_navigation( $post ) {
  * HEADER navigation
  */
 function wp_gridinator_header_navigation_dropdown($post) {
-	// check header menu exists for this post
+	
+	// check header menu exists for this post/page/category
 	$pageID = get_queried_object_ID();
-	$menu_name = get_metadata('post', $pageID, 'header_menu', true);
-	$menu = wp_get_nav_menu_object($menu_name);
+	$page_menu_meta = get_metadata('post', $pageID, 'header_menu', true);
+	$term = get_term($pageID);
+	$term_menu_meta = get_term_meta($pageID, 'header_menu', true)['header_menu'];
+	$menu;
 	$menu_items;
+	// configure header
 	$header_nav_id = 'navigation-header';
 	$header_nav_toggle = '';
 	$header_nav = '';
+
+	// build menu
+	if ( strlen($page_menu_meta) > 0 ) {
+		$menu = wp_get_nav_menu_object($page_menu_meta);
+	}
+	if ( strlen($term_menu_meta) > 0 ) {
+		$menu = wp_get_nav_menu_object($term_menu_meta);
+	}
+
+	echo "<pre>";
+	var_dump($menu);
+	//var_dump(wp_get_nav_menu_object($page_menu_meta));
+	//var_dump(wp_get_nav_menu_object($term_menu_meta));
+	echo "</pre>";
+
 	// check has menu
 	if(is_object($menu)) {
 		// add nav toggle
@@ -283,7 +302,7 @@ function wp_gridinator_header_navigation_dropdown($post) {
  */
 // add meta box to admin
 function wp_gridinator_featured_post() {
-    add_meta_box( 'sm_meta', __( 'Featured Post', 'sm-textdomain' ), 'wp_gridinator_featured_post_callback', 'post' );
+	add_meta_box( 'sm_meta', __( 'Featured Post', 'sm-textdomain' ), 'wp_gridinator_featured_post_callback', 'post' );
 }
 function wp_gridinator_featured_post_callback($post) {
 	$featured = get_post_meta($post->ID); ?>
@@ -423,6 +442,102 @@ function wp_gridinator_display_post_featured_image() {
 
 
 
+
+/** ====================================================================================================
+ *  	CATEGORIES
+ ** ==================================================================================================== */
+
+
+
+
+
+/**
+ * Adds admin ability to give categoy pages a header_menu metadata attr
+ */
+function wp_gridinator_edit_category_header_menu_field( $term ){
+	$term_id = $term->term_id;
+	$term_meta = get_option( "taxonomy_$term_id" );
+	?>
+	<tr class="form-field">
+		<th scope="row">
+			<label for="term_meta[header_menu]"><?php echo _e('Category Header Menu (secondary nav)') ?></label>
+			<td>
+				<input name="term_meta[header_menu]" id="term_meta[header_menu]" type="text" value="<?php if (isset($term_meta['header_menu'])) { echo $term_meta['header_menu']; }; ?>" />
+			</td>
+		</th>
+	</tr><?php
+}
+// Add the dropdown to the Edit form
+add_action( 'category_edit_form_fields', 'wp_gridinator_edit_category_header_menu_field' );
+
+
+
+
+
+// Save the field
+function wp_gridinator_save_category_header_menu_meta( $term_id ){ 
+	if ( isset( $_POST['term_meta'] ) ) {
+		$term_meta = array();
+		// Be careful with the intval here.
+		// If it's text you could use sanitize_text_field()
+		$term_meta['header_menu'] = isset ( $_POST['term_meta']['header_menu'] ) ? sanitize_text_field( $_POST['term_meta']['header_menu'] ) : '';
+		// Save the option array.
+		add_term_meta( $term_id, 'header_menu', $term_meta, false );
+		update_option( "taxonomy_$term_id", $term_meta );
+	}
+}
+
+
+
+
+
+// create an option when adding a new category
+function wp_gridinator_add_category_header_menu_field( $term ){
+	$term_id = $term->term_id;
+	$term_meta = get_option( "taxonomy_$term_id" );
+	?>
+	<div class="form-field">
+		<label for="term_meta[header_menu]"><?php echo _e('Category Header Menu (secondary nav)') ?></label>
+		<input name="term_meta[header_menu]" id="term_meta[header_menu]" type="text" value="<?php if (isset($term_meta['header_menu'])) { echo $term_meta['header_menu']; }; ?>" />
+	</div><?php
+}
+// Add the dropdown to the Create form
+add_action( 'category_add_form_fields', 'wp_gridinator_add_category_header_menu_field' );
+// save_tax_meta
+add_action( 'edited_category', 'wp_gridinator_save_category_header_menu_meta', 10, 2 ); 
+add_action( 'create_category', 'wp_gridinator_save_category_header_menu_meta', 10, 2 ); 
+
+
+
+
+
+/**
+ * displays category header_menu in admin table
+ */
+// Add column to Category list
+function wp_gridinator_category_header_menu_columns($columns) {
+	return array_merge( $columns, array('header_menu' =>  __('Header Menu')) );
+}
+add_filter('manage_edit-category_columns' , 'wp_gridinator_category_header_menu_columns');
+
+// Add the value to the column
+function wp_gridinator_category_header_menu_columns_values( $deprecated, $column_name, $term_id) {
+	if($column_name === 'header_menu'){
+		$term_meta = get_option( "taxonomy_$term_id" );
+		if (isset($term_meta['header_menu'])) {
+			echo _e($term_meta['header_menu']);
+		} else {
+			echo _e('none');
+		}
+	}
+}
+add_action( 'manage_category_custom_column' , 'wp_gridinator_category_header_menu_columns_values', 10, 3 );
+
+
+
+/** ====================================================================================================
+ *  	SEARCH
+ ** ==================================================================================================== */
 
 /**
  * Search form

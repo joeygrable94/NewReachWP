@@ -2863,6 +2863,7 @@ EXAMPLE:
 			fullscreen: function fullscreen(event) {
 				// do stuff with view content
 				var viewContent = event.target.getAttribute('data-view');
+				var bgColor = event.target.getAttribute('data-bg-color');
 				var box = $('#fullscreen-lightbox');
 				// light box exists
 				if (box.length) {
@@ -2875,7 +2876,7 @@ EXAMPLE:
 					// add lightbox to DOM
 					var FS_lightbox = '<div id="fullscreen-lightbox" class="fs-lightbox active">';
 					FS_lightbox += '<a class="inner-toggle fs-lb-close" data-bind="click" data-event="toggler" data-toggle="#fullscreen-lightbox"><i class="fa fa-plus"></i> exit fullscreen</a>';
-					FS_lightbox += '<div class="inner-content">';
+					FS_lightbox += '<div class="inner-content" style="background-color: ' + bgColor + '">';
 					FS_lightbox += '<img class="view-content" src="' + viewContent + '"/>';
 					FS_lightbox += '</div></div>';
 					$('body').append(FS_lightbox);
@@ -2967,7 +2968,7 @@ EXAMPLE:
 	// when document ready
 	$(document).ready(function () {
 		// vars
-		var self = $(this);
+		var doc = $(this);
 		var $scrollers = $('.scroller');
 		// check scrollers exists
 		if ($scrollers.length) {
@@ -2989,6 +2990,7 @@ EXAMPLE:
 			self.container = $(container);
 			self.deck = self.container.children('.deck');
 			self.slides = self.deck.children('img');
+			self.arrows = self.container.children('.scroller-arrows');
 			self.numSlides = self.slides.length;
 			self.totalWidth = 0;
 			self.inSlideshow = false;
@@ -3002,7 +3004,6 @@ EXAMPLE:
 				$(this).mousewheel(function (e, delta) {
 					self.scrollerJack(this, e, delta);
 				});
-
 				// on MOUSELEAVE
 			}).mouseleave(function () {
 				self.slideshowStop = true;
@@ -3020,6 +3021,10 @@ EXAMPLE:
 					self.slideshowStop = true;
 					$(this).unbind('mousewheel');
 				}
+			});
+			// click ARROWS
+			self.arrows.click(function (event) {
+				self.activeAutoScroll(event);
 			});
 		}
 		// GETTERS & SETTERS
@@ -3068,9 +3073,9 @@ EXAMPLE:
 				// hide scroller arrows
 				this.hideScrollerArrows(context);
 				// vars
-				var scrollPos = $(context).scrollLeft();
-				var scrollerWidth = Math.round(scrollPos + $(context).innerWidth());
-				var maxWidth = $(context)[0].scrollWidth;
+				var scrollPos = $(context).scrollLeft(),
+				    scrollerWidth = Math.round(scrollPos + $(context).innerWidth()),
+				    maxWidth = $(context)[0].scrollWidth;
 				// STOP SCROLLER and continue scrolling the WINDOW when:
 				// 1) if reaches start of scroller
 				if (0 >= scrollPos) {
@@ -3093,8 +3098,32 @@ EXAMPLE:
 			value: function hideScrollerArrows(element) {
 				$(element).children('.scroller-arrows').fadeOut('250');
 			}
+			// AUTO SCROLLING
+
+		}, {
+			key: "activeAutoScroll",
+			value: function activeAutoScroll(event) {
+				var start = this.container.scrollLeft(),
+				    end = this.getTotalWidth(),
+				    change = end - start,
+				    currentTime = 0,
+				    increment = 20,
+				    duration = 5000; // 5 sec.
+			}
 		}]);
 
 		return scroller;
 	}();
 })(jQuery);
+
+// HELPER FUNCTIONS
+//t = current time
+//b = start value
+//c = change in value
+//d = duration
+Math.easeInOutQuad = function (t, b, c, d) {
+	t /= d / 2;
+	if (t < 1) return c / 2 * t * t + b;
+	t--;
+	return -c / 2 * (t * (t - 2) - 1) + b;
+};
