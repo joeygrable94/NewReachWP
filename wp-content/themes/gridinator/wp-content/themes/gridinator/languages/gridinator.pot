@@ -4,7 +4,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gridinator 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/index\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2018-08-04 04:20:55+00:00\n"
+=======
+"POT-Creation-Date: 2018-08-03 20:33:43+00:00\n"
+>>>>>>> 0e2505754e9492f9542f43687d777325cc2d4832
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
