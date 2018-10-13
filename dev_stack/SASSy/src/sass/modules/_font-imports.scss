@@ -1,7 +1,11 @@
 
+// IMPORT ADOBE TYPEKIT FONTS
+// ==================================================
+//@import url("https://use.typekit.net/gsf7ony.css");
+
+
 // IMPORT CUSTOM FONT FAMILIES
 // ==================================================
-
 // place your font files in THIS same folder,
 // the $font-path is relative to this location '../fonts/'
 @include _font-face(
@@ -47,3 +51,18 @@
 	$text-rendering: auto,
 	$font-formats: (otf: opentype)
 );
+
+@include _font-face(
+	$font-family: 'silentium',
+	$font-path: '../fonts/',
+	$font-file-name: 'SilentiumPro-Roman2',
+	$font-style: normal,
+	$font-weight: normal,
+	$font-svg-id: null,
+	$text-rendering: optimizeLegibility,
+	$font-formats: (otf: opentype)
+);
+
+
+
+

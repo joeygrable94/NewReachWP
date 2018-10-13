@@ -2839,8 +2839,11 @@ EXAMPLE:
 (function ($) {
 	// when document ready
 	$(document).ready(function () {
+
 		// DOM global
 		var self = $(this);
+		var docbody = $('body');
+
 		// EVENTER — pass custom event handlers
 		var eventBinder = new EventBinder({
 			// toggles elements active state
@@ -2860,29 +2863,42 @@ EXAMPLE:
 				return;
 			},
 			// creates a model/lightbox to display the data-view content
-			fullscreen: function fullscreen(event) {
-				// do stuff with view content
-				var viewContent = event.target.getAttribute('data-view');
-				var bgColor = event.target.getAttribute('data-bg-color');
-				var box = $('#fullscreen-lightbox');
-				// light box exists
-				if (box.length) {
-					// update view box content src
-					var viewBox = box.find('.view-content')[0];
-					$(viewBox).attr('src', viewContent);
-					box.toggleClass('active');
-					// light box does NOT exist
-				} else {
-					// add lightbox to DOM
-					var FS_lightbox = '<div id="fullscreen-lightbox" class="fs-lightbox active">';
-					FS_lightbox += '<a class="inner-toggle fs-lb-close" data-bind="click" data-event="toggler" data-toggle="#fullscreen-lightbox"><i class="fa fa-plus"></i> exit fullscreen</a>';
-					FS_lightbox += '<div class="inner-content" style="background-color: ' + bgColor + '">';
-					FS_lightbox += '<img class="view-content" src="' + viewContent + '"/>';
-					FS_lightbox += '</div></div>';
-					$('body').append(FS_lightbox);
-					eventBinder.updateEvents();
-				}
-			}
+			fullscreen: function fullscreen(event) {}
+		});
+
+		// FULLSCREEN lightbox
+		var fullscreenBox = $('#fullscreen-lightbox');
+		// if no box exists
+		if (!fullscreenBox.length) {
+			// add lightbox to DOM
+			var FS_lightbox = '<div id="fullscreen-lightbox" class="fs-lightbox">';
+			FS_lightbox += '<a class="inner-toggle fs-lb-close" data-bind="click" data-event="toggler" data-toggle="#fullscreen-lightbox"><i class="fa fa-plus"></i> exit fullscreen</a>';
+			FS_lightbox += '<div class="inner-content">';
+			FS_lightbox += '<img class="view-content" />';
+			FS_lightbox += '</div></div>';
+			docbody.append(FS_lightbox);
+		}
+		// open fullscreen
+		var fullscreenBtnOpen = $('.btn-fullscreen-wrap .btn-fullscreen');
+		fullscreenBtnOpen.each(function (index, el) {
+			$(el).click(function (event) {
+				// update view content & bg color
+				var fclb = $('#fullscreen-lightbox');
+				var fclb_inner = fclb.children('.inner-content');
+				var fclb_img = fclb.find('.view-content')[0];
+				var view_src = event.target.getAttribute('data-view');
+				var bg_color = event.target.getAttribute('data-bg-color');
+				// update fullscreen elements
+				docbody.css('overflow', 'hidden');
+				$(fclb_img).attr('src', view_src);
+				$(fclb_inner).css('background-color', bg_color);
+				$(fclb).toggleClass('active');
+			});
+		});
+		// close fullscreen
+		$('#fullscreen-lightbox .inner-toggle').click(function (e) {
+			$('#fullscreen-lightbox').toggleClass('active');
+			docbody.css('overflow', 'auto');
 		});
 	});
 	// EventBinder CLASS
@@ -2890,8 +2906,6 @@ EXAMPLE:
 	var EventBinder = function () {
 		// construct event handler obj
 		function EventBinder() {
-			var _this = this;
-
 			var handlers = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 			var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
@@ -2901,24 +2915,27 @@ EXAMPLE:
 			this.toBind = document.querySelectorAll('[data-bind]');
 			// obj containing all the event actions
 			this.handlers = handlers;
-			// updater
-			this.updateEvents = function () {
-				_this.toBind = document.querySelectorAll('[data-bind]');
-				_this.init();
-			};
 			// if initated
 			if (start) {
 				this.init();
 			}
 			return this;
 		}
-		// bind event actions to DOM elements
+		// updater
 
 
 		_createClass(EventBinder, [{
+			key: "updateEvents",
+			value: function updateEvents() {
+				this.toBind = document.querySelectorAll('[data-bind]');
+				this.init();
+			}
+			// bind event actions to DOM elements
+
+		}, {
 			key: "bindEvents",
 			value: function bindEvents() {
-				var _this2 = this;
+				var _this = this;
 
 				// for each element
 				this.toBind.forEach(function (element, index) {
@@ -2927,12 +2944,12 @@ EXAMPLE:
 					    handler = element.getAttribute('data-event'),
 					    binded = element.getAttribute('data-binded');
 					// chech for the event listener in the handlers obj
-					if (_typeof(_this2.handlers[listener]) !== undefined) {
+					if (_typeof(_this.handlers[listener]) !== undefined) {
 						// if not already bound
 						if (!binded) {
 							// bind each event to element
 							element.setAttribute('data-binded', 'true');
-							element.addEventListener(listener, _this2.handlers[handler]);
+							element.addEventListener(listener, _this.handlers[handler]);
 						}
 					}
 				});

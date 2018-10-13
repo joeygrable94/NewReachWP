@@ -1,0 +1,113 @@
+// ===========================================================================
+// HEADERS
+// ===========================================================================
+
+// SITE HEADER BRANDING
+// ---------------------------------------------------------------------------
+#site-header {
+	#site-header-branding {
+		padding: linear-scale(2);
+		border-bottom: linear-scale(2) solid $color-primary;
+		background-color: $white;
+		color: $color-primary;
+		& a {color: $color-primary;}
+		& a:hover {text-decoration: none;}
+	}
+}
+
+// PAGE HEADER
+// ---------------------------------------------------------------------------
+#page-header {
+	position: relative;
+	width: 100%;
+	padding: linear-scale(2);
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	& .page-title {
+		width: 100%;
+		letter-spacing: 1px;
+		padding: 0rem;
+		padding-bottom: linear-scale(1);
+		@include font-contrast(
+			$family: 'akzg-super',
+			$style: normal,
+			$weight: bolder
+		);
+		font-size: linear-scale(3);
+	}
+	// Page Navigation
+	& #site-nav-secondary {
+		width: 100%;
+	}
+}
+
+// responsive
+@media screen and (min-width: $middle-limit-screen) {
+	#page-header {
+		flex-flow: row nowrap;
+		& .page-title {
+			width: 33%;
+			&:after {
+				content: '';
+				display: block;
+				position: relative;
+				top: linear-scale(3.5);
+				left: (linear-scale(2) * -1);
+				width: calc(100% + #{linear-scale(2)});
+				height: linear-scale(2);
+				background-color: $color-primary;
+			}
+		}
+		& #site-nav-secondary {
+			width: 67%;
+		}
+	}
+}
+
+
+// BLOG HEADER
+// ---------------------------------------------------------------------------
+#blog-header {
+	position: relative;
+	width: 100%;
+	padding: linear-scale(2);
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	& .page-title {
+		width: 100%;
+		letter-spacing: 1px;
+		padding: 0rem;
+		@include font-contrast(
+			$family: 'akzg-super',
+			$style: normal,
+			$weight: bolder
+		);
+		font-size: linear-scale(3);
+	}
+	& #site-nav-secondary { width: 100%; }
+}
+@media screen and (min-width: $middle-limit-screen) {
+	#blog-header {
+		flex-flow: row nowrap;
+		& .page-title {
+			width: 33%;
+			&:after {
+				content: '';
+				display: block;
+				position: relative;
+				top: linear-scale(3.5);
+				left: (linear-scale(2) * -1);
+				width: calc(100% + #{linear-scale(2)});
+				height: linear-scale(2);
+				background-color: $color-primary;
+			}
+		}
+		& #site-nav-secondary { width: 67%; }
+	}
+}
+
+
+
+

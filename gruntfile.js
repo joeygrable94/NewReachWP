@@ -3,7 +3,7 @@
 module.exports = function(grunt) {
 
 	// directories
-	var themeName = 'gridinator';
+	var themeName = 'wp_joeyg';
 	var theme = {
 		root: './wp-content/themes/' + themeName
 	};
@@ -232,7 +232,7 @@ module.exports = function(grunt) {
 	// register tasks
 	grunt.registerTask('default', [
 		'copy',
-		'makepot',
+		//'makepot',
 		'curl',
 		'sass',
 		'postcss',
@@ -241,6 +241,13 @@ module.exports = function(grunt) {
 		'concat',
 		'babel',
 		'uglify'
+	]);
+
+	// register tasks
+	grunt.registerTask('sassy', [
+		'sass',
+		'postcss',
+		'cssnano'
 	]);
 
 };

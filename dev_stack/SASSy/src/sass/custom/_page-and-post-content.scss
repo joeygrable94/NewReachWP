@@ -1,0 +1,292 @@
+// ===========================================================================
+// PAGE & POST CONTENT STYLES (SPECIFIC)
+// ===========================================================================
+
+// PORTFOLIO INDEX PAGE => CATAGORIES LIST CONETENT
+// ---------------------------------------------------------------------------
+#content-post-categories {
+	//margin-top: linear-scale(4);
+	padding: linear-scale(2);
+	width: 100%;
+	& .category-block {
+		display: block;
+		position: relative;
+		width: 100%;
+		min-height: 33vh;
+		margin-bottom: linear-scale(2);
+		& a { color: $color-secondary; }
+		// custom category styles
+		&.bcat-visual-design {}
+		&.bcat-brand-identity {}
+		&.bcat-books-and-calligraphy {}
+
+	}
+	& .category-block-image {
+		& img {
+			width: 100%;
+			height: 100%;
+			&:hover { cursor: pointer; }
+		}
+		@include transition($time: 0.25s, $type: ease-out);
+		background-color: $color-primary;
+		&:hover {
+			@include transition($time: 0.25s, $type: ease-out);
+			background-color: $color-secondary;
+			text-decoration: none;
+		}
+	}
+	& .category-block-content {
+		padding: linear-scale(2);
+		padding-top: linear-scale(4);
+		& .category-block-title {
+			font-size: linear-scale(3);
+			line-height: linear-scale(4);
+			@include font-contrast(
+				$family: 'akzg-bold',
+				$style: normal,
+				$weight: bold
+			);
+		}
+		& .category-block-desc {
+			font-size: linear-scale(3);
+			line-height: linear-scale(4);
+			@include font-contrast(
+				$family: 'akzg-light',
+				$style: normal,
+				$weight: light
+			);
+			color: $color-primary;
+		}
+	}
+}
+@supports (display: flex) {
+	#content-post-categories {
+		display: flex;
+		flex-flow: row wrap;
+	}
+}
+// category-block responsive
+#content-post-categories {
+	@media screen and (min-width: $middle-limit-screen) {
+		& .category-block { width: 50%; }
+	}
+	@media screen and (min-width: $lower-limit-desktop) {
+		& .category-block { width: 33%; margin-bottom: 0rem; }
+	}
+}
+
+
+
+
+
+// BLOG CONTENT
+// ---------------------------------------------------------------------------
+#content-blog-articles {
+	position: relative;
+	max-width: $lower-limit-desktop;
+	width: 100%;
+	padding-top: linear-scale(2);
+	padding-bottom: linear-scale(2);
+	margin: auto;
+	& a {
+		@include transition($time: 0.25s, $type: ease-out);
+		width: 100%;
+		& .content-blog {
+			display: block;
+			width: 100%;
+			padding: linear-scale(2);
+			& .content-blog-main {
+				position: relative;
+				display: block;
+				width: 100%;
+				height: 100%;
+				& .content-blog-main-title {
+					@include font-contrast(
+						$family: 'akzg-light-italic',
+						$style: italic,
+						$weight: light
+					);
+				}
+				& .content-post-headline { color: $color-primary; }
+				& .content-blog-thumbnail {
+					@include transition($time: 0.25s, $type: ease-out);
+					padding: linear-scale(2);
+					width: 100%;
+					max-height: ((9 * 100vh) / 16); // 16:9
+				}
+				& .content-blog-main-meta {
+					writing-mode: vertical-lr;
+					z-index: -10;
+					display: block;
+					position: absolute;
+					left: linear-scale(2.5);
+					top: linear-scale(20);
+					@media screen and (min-width: $lower-limit-screen) {
+						top: linear-scale(15);
+					}
+					& .content-blog-date {}
+				}
+			}
+		}
+	}
+	// hover
+	& a:hover {
+		@include transition($time: 0.25s, $type: ease-out);
+		text-decoration: none !important;
+		& .content-blog {
+			& .content-blog-main {
+				& .content-blog-thumbnail {
+					@include transition($time: 0.25s, $type: ease-out);
+					transform: scale(0.85);
+				}
+			}
+		}
+	}
+}
+
+@supports (display: flex) {
+	#content-blog-articles {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		align-items: flex-start;
+		align-content: stretch;
+	}
+}
+
+// responsive
+@media screen and (min-width: $upper-limit-screen) {
+	#content-blog-articles {
+		& a {
+			width: 50%;
+		}
+	}
+}
+
+
+
+
+
+
+// PROCESS CONTENT
+// ---------------------------------------------------------------------------
+#content-process-articles {
+	width: 100%;
+	//min-height: 100vh;
+	& * { color: white; }
+	& a .content-process {
+		@include transition($time: 0.25s, $type: ease-out);
+		padding: linear-scale(2);
+		background-color: $color-secondary;
+		border-bottom: linear-scale(1) solid darken($color-secondary, 10%);
+		& .content-process-main {
+			max-width: $upper-limit-screen;
+			margin: auto;
+			padding: linear-scale(2);
+			& .content-process-main-title {
+				padding-top: 0rem;
+				font-size: linear-scale(2);
+				line-height: linear-scale(3);
+				@media screen and (min-width: $lower-limit-screen) {
+					font-size: linear-scale(3);
+					line-height: linear-scale(4);
+				}
+				@media screen and (min-width: $upper-limit-screen) {
+					font-size: linear-scale(4);
+					line-height: linear-scale(5);
+				}
+				@include font-contrast(
+					$family: 'akzg-light-italic',
+					$style: italic,
+					$weight: light
+				);
+			}
+			& .content-post-headline {
+				padding-top: linear-scale(0.5);
+				font-size: linear-scale(1.5);
+				letter-spacing: 0.1rem;
+				@include font-contrast(
+					$family: 'akzg-light',
+					$style: normal,
+					$weight: light
+				);
+			}
+		}
+	}
+	// hover
+	& a:hover {
+		@include transition($time: 0.25s, $type: ease-out);
+		text-decoration: none !important;
+		& .content-process {
+			background-color: lighten($color-primary, 10%) ;
+			border-bottom: linear-scale(1) solid $color-primary;
+		}
+	}
+}
+
+
+
+
+
+// RESOURCES CONTENT
+// ---------------------------------------------------------------------------
+#content-resource-search {
+	position: relative;
+	max-width: $lower-limit-desktop;
+	width: 100%;
+	padding-top: linear-scale(2);
+	padding-bottom: linear-scale(2);
+	margin: auto;
+	& .content-resource-title {}
+	& .form-search-resources {
+	}
+}
+#content-resources-articles {
+	position: relative;
+	max-width: $lower-limit-desktop;
+	width: 100%;
+	padding-top: linear-scale(2);
+	padding-bottom: linear-scale(2);
+	margin: auto;
+
+	& a .content-process {
+		& .content-resource-header {}
+		& .content-process-main {
+			& .content-process-main-title {}
+			& .content-post-headline {}
+		}
+		& .content-resource-footer {}
+	}
+}
+
+
+
+
+
+// Books & Calligraphy page
+// ---------------------------------------------------------------------------
+#page.books-and-calligraphy {
+	& .content-post {
+		& .content-post-header {}
+		& .content-page-main {}
+		& .content-page-footer {}
+		// general typography
+		& * {
+			font-family: 'silentium';
+		}
+		& p, & ul, & blockquote {
+			max-width: $middle-limit-screen;
+		}
+		& h1 {}
+		& h2 {}
+		& h3 {}
+		& h4 {}
+		& h5 {}
+		& h6 {}
+		& p { font-size: 110%; }
+	}
+}
+
+
+
+

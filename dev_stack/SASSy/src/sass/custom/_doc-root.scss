@@ -1,0 +1,170 @@
+// ===========================================================================
+// GLOBAL / ROOT
+// ===========================================================================
+body {
+	overflow-x: hidden;
+	width: 100%;
+	& * {
+		@include border-box();
+	}
+}
+
+
+
+
+
+// DOCUMENT GRID
+// ---------------------------------------------------------------------------
+
+// MOBILE FIRST: FLOAT BOX
+body {
+	overflow-y: scroll;
+	min-height: 100vh;
+}
+#site-header {
+	display: block;
+	position: relative;
+	width: 100%;
+	& .inner-wrap {
+		border-bottom: linear-scale(2) solid $color-primary;
+		position: relative;
+		width: inherit;
+		height: auto;
+	}
+}
+#page {
+	display: block;
+	position: relative;
+	height: inherit;
+	@include clearfix();
+	//border-bottom: linear-scale(2) solid $color-primary;
+}
+#site-footer {
+	width: 100%;
+	display: block;
+	border-top: linear-scale(1) solid darken($color-primary, 15%);
+	@include clearfix();
+	& .inner-wrap {
+		width: 100%;
+		max-width: $upper-limit-screen;
+		margin: 0 auto;
+		padding: linear-scale(2);
+		& .widget {
+			display: block;
+			width: 100%;
+		}
+	}
+}
+
+// FLEX BOX
+@supports (display: flex) {
+	body {
+		overflow-y: scroll;
+		min-height: 100vh;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: stretch;
+	}
+	#page {
+		display: flex;
+		flex-direction: column;
+	}
+	#site-footer {
+		margin-top: auto;
+		width: 100%;
+		& .inner-wrap {
+			display: flex;
+			flex-direction: column;
+			& .widget {
+				float: none;
+				display: block;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: $middle-limit-screen) {
+	#site-footer .inner-wrap {
+		flex-direction: row;
+		& .widget {
+			display: inline-block;
+			float: left;
+			width: 33%;
+			padding-right: linear-scale(2);
+			&:first-child {	padding-left: 0rem; }
+			&:last-child {	padding-right: 0rem; }
+		}
+	}
+}
+
+@media screen and (min-width: $upper-limit-screen) {
+}
+
+@media screen and (min-width: $lower-limit-desktop) {
+	body {
+		flex-flow: row nowrap;
+	}
+	#site-header {
+		display: inline-block;
+		float: left;
+		width: $nW;
+		height: 100vh;
+		& .inner-wrap {
+			border-bottom: 0rem solid $color-primary;
+			border-right: linear-scale(1) solid $color-primary;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: inherit;
+			height: inherit;
+		}
+	}
+	#page {
+		display: inline-block;
+		float: right;
+		width: $gW;
+	}
+}
+
+
+
+
+
+// BRAND LOGO
+// ---------------------------------------------------------------------------
+.jg-logo-text-wrap {
+	@include font-contrast(
+		$family: 'akzg-super',
+		$style: normal,
+		$weight: bolder
+	);
+	& span {
+		display: inline-block;
+		position: relative;
+	}
+	& .jg-logo-text-joey {
+		color: $color-primary;
+		font-size: linear-scale(4);
+	}
+	& .jg-logo-text-g {
+		color: $color-secondary;
+		font-size: linear-scale(3);
+		position: relative;
+		top: (linear-scale(1) * -1);
+		left: (linear-scale(4,down));
+		transform-origin: 50% 50%;
+		transform: rotate(0);
+	}
+	@include transition($time: 0.25s, $type: ease-out);
+	&:hover {
+		@include transition($time: 0.25s, $type: ease-out);
+		& .jg-logo-text-g {
+			@include transition($time: 0.25s, $type: ease-out);
+			animation: rotate-center 1s linear infinite reverse;
+		}
+	}
+}
+
+
+
+

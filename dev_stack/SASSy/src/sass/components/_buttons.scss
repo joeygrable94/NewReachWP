@@ -219,7 +219,7 @@ button, .button, input.btn {
 //
 // ============================================================
 .btn-block {
-	width: 100%;
+	width: 100% !important;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;

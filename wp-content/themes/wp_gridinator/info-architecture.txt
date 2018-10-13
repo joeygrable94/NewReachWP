@@ -1,0 +1,33 @@
+body
+	header
+		a
+		div
+
+	nav#site-nav.main-navigation
+		a.nav-close.fa.fa-close
+		div.nav-inner
+			div.menu-navigation-container
+				ul#primary-menu.menu
+					li.menu-item a
+					li.menu-item.current-menu-item a
+			ul.social-links
+				li a.sm-li.fa.fa-linkedin
+				li a.sm-fb.fa.fa-facebook-f
+				li a.sm-tw.fa.fa-twitter
+				li a.sm-gt.fa.fa-git
+
+	div#page
+		div.nav-toggle
+			a.nav-open.fa.fa-bars
+		article.grid-post.post
+			header.entry-header
+				h2.entry-title
+			div.entry-meta
+			div.entry-content
+			footer.entry-footer
+
+	footer#colophon.site-footer
+		h1.logo-Joey
+		span.logo-G
+			nav.logo-sub
+				a
